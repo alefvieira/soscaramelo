@@ -1,0 +1,171 @@
+{
+    "usuario":[
+        {
+            "id": 1,
+            "login": "admin",
+            "senha": "admin",
+            "email": "admin@admin.com"
+        }
+    ],
+
+    "anime":[
+        {
+            "id": 1,
+            "nome": "Aoashi",
+            "diretor": "",
+            "estudio": "Production I.G",
+            "qtdTemporadas": 1,
+            "sinopse": "Aoi Ashito é um jovem aspirante a jogador de futebol de uma cidadezinha no interior do Japão. Suas esperanças de entrar em um colégio com um bom clube de futebol são frustradas quando ele causa um incidente durante uma partida crítica para seu time, o que resulta em sua derrota e eliminação de seu último torneio no ensino fundamental. No entanto, ele chama a atenção de alguém importante que estava visitando de Tóquio. Como as coisas vão acabar para Ashito?",
+            "categorias": ["Escolar", "Esporte", "Seinen", "Slice of life"],
+            "dataLancamento": "09/04/2022",
+            "qtdEp": 12,
+            "statusDoAnime": "Lançamento",
+            "nota": 8.8
+        }
+    ],
+    "plataforma":[
+        {   
+            "id": 1,
+            "fkAnime": 1,
+            "plataforma": "Crunchyroll",
+            "tipoServico": "Pago",
+            "link": "https://www.crunchyroll.com/pt-br/search?from=&q=Ao+ashi"
+        }
+    ],
+    "categorias":[
+        {
+            "id": 1,
+            "nome": "Ação"
+        },
+        {
+            "id": 2,
+            "nome": "Artes Marciais"
+        } ,
+        {
+            "id": 3,
+            "nome": "Aventura"
+        },
+        {
+            "id": 4,
+            "nome": "Comédia"
+        },
+        {
+            "id": 5,
+            "nome": "Demônios"
+        },
+        {
+            "id": 6,
+            "nome": "Drama"
+        },
+        {
+            "id": 7,
+            "nome": "Ecchi"
+        },
+        {
+            "id": 8,
+            "nome": "Espaço"
+        },
+        {
+            "id": 9,
+            "nome": "Esporte"
+        },
+        {
+            "id": 10,
+            "nome": "Fantasia"
+        },
+        {
+            "id": 11,
+            "nome": "Ficção Científica"
+        },
+        {
+            "id": 12,
+            "nome": "Harém"
+        },
+        {
+            "id": 13,
+            "nome": "Horror"
+        },
+        {
+            "id": 14,
+            "nome": "Jogos"
+        },
+        {
+            "id": 15,
+            "nome": "Josei"
+        },
+        {
+            "id": 16,
+            "nome": "Magia"
+        },
+        {
+            "id": 17,
+            "nome": "Mecha"
+        },
+        {
+            "id": 18,
+            "nome": "Mistério"
+        },
+        {
+            "id": 19,
+            "nome": "Militar"
+        },
+        {
+            "id": 20,
+            "nome": "Musical"
+        },
+        {
+            "id": 21,
+            "nome": "Paródia"
+        },
+        {
+            "id": 22,
+            "nome": "Psicológico"
+        },
+        {
+            "id": 23,
+            "nome": "Romance"
+        },
+        {
+            "id": 24,
+            "nome": "Seinen"
+        },
+        {
+            "id": 25,
+            "nome": "Shoujo-ai"
+        },
+        {
+            "id": 26,
+            "nome": "Shounen"
+        },
+        {
+            "id": 27,
+            "nome": "Slice of Life"
+        },
+        {
+            "id": 28,
+            "nome": "Sobrenatural"
+        },
+        {
+            "id": 29,
+            "nome": "Suspense"
+        },
+        {
+            "id": 30,
+            "nome": "Superpoder"
+        },
+        {
+            "id": 31,
+            "nome": "Vampiros"
+        },
+        {
+            "id": 32,
+            "nome": "Vida"
+        }, 
+        {
+            "id": 33,
+            "nome": "Escolar"
+        }
+    ]
+}
+
+

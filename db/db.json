@@ -1,0 +1,253 @@
+{
+  "usuario": [
+    {
+      "id": 1,
+      "login": "admin",
+      "senha": "admin",
+      "email": "admin@admin.com"
+    }
+  ],
+  "anime": [
+    {
+      "imgcapa": "https://criticalhits.com.br/wp-content/uploads/2022/06/naruto-uzumaki_qabz-scaled.jpg",
+      "nome": "Naruto",
+      "diretor": "Masashi Oda",
+      "estudio": "Pierrote",
+      "qtdtemporadas": 10,
+      "sinopse": "A série gira em torno das aventuras vividas por Naruto Uzumaki, um jovem órfão habitante da Aldeia da Folha que sonha em se tornar o quinto Hokage, o maior guerreiro e governante da vila. Ao se graduar como ninja, Naruto descobre que tem um demônio raposa selado dentro de si.",
+      "categorias": [
+        "Ação",
+        "Artes Marciais"
+      ],
+      "plataformas": [
+        "Amazon Prime Video"
+      ],
+      "dtlancamento": "",
+      "qtdEp": "",
+      "statusDoAnime": "Em lançamento",
+      "nota": "123",
+      "id": 1
+    },
+    {
+      "id": 3,
+      "imgcapa": "https://i0.wp.com/www.jbox.com.br/wp/wp-content/uploads/2021/03/my-hero-academia-protagonistas-destacada.jpg?fit=774%2C489&quality=99&strip=all&ssl=1",
+      "anime": "",
+      "email": "",
+      "senha": "",
+      "nome": "Boku do Hero",
+      "diretor": "easda",
+      "sinopse": "easdsadsa"
+    },
+    {
+      "imgcapa": "https://pubimg.band.uol.com.br/files/2c0933a3fb3b6946e074.png",
+      "nome": "COXINHA GOD",
+      "diretor": "",
+      "estudio": "",
+      "qtdtemporadas": "",
+      "sinopse": "#NERFA AOKYN",
+      "categorias": [
+        "Ação",
+        "Artes Marciais"
+      ],
+      "plataformas": [
+        "Funimation",
+        "Netflix"
+      ],
+      "dtlancamento": "",
+      "qtdEp": "",
+      "statusDoAnime": "",
+      "nota": "",
+      "id": 4
+    },
+    {
+      "imgcapa": "https://uploads.jovemnerd.com.br/wp-content/uploads/2022/06/manga_de_one_piece__22ly11r-1210x544.jpg",
+      "nome": "One Piece",
+      "diretor": "Masashi Kishifote",
+      "estudio": "Palhacinho",
+      "qtdtemporadas": 19,
+      "sinopse": "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.",
+      "categorias": [
+        "Artes Marciais",
+        "Harém"
+      ],
+      "plataformas": [
+        "Amazon Prime Video",
+        "Netflix"
+      ],
+      "dtlancamento": "2022-10-26",
+      "qtdEp": "1231",
+      "statusDoAnime": "Em lançamento",
+      "nota": "13",
+      "id": 5
+    }
+  ],
+  "plataforma": [
+    {
+      "id": 1,
+      "plataforma": "Crunchyroll",
+      "tipoServico": "Pago"
+    },
+    {
+      "id": 2,
+      "plataforma": "Netflix",
+      "tipoServico": "Pago"
+    },
+    {
+      "id": 3,
+      "plataforma": "Funimation",
+      "tipoServico": "Pago"
+    },
+    {
+      "id": 4,
+      "plataforma": "Amazon Prime Video",
+      "tipoServico": "Pago"
+    },
+    {
+      "id": 5,
+      "plataforma": "Hidive",
+      "tipoServico": "Pago"
+    },
+    {
+      "id": 6,
+      "plataforma": "Tubi",
+      "tipoServico": "Pago"
+    },
+    {
+      "id": 7,
+      "plataforma": "Pluto TV",
+      "tipoServico": "Pago"
+    },
+    {
+      "id": 8,
+      "plataforma": "Looke",
+      "tipoServico": "Pago"
+    },
+    {
+      "id": 9,
+      "plataforma": "YouTube",
+      "tipoServico": "Grátis"
+    }
+  ],
+  "categorias": [
+    {
+      "id": 2,
+      "nome": "Artes Marciais"
+    },
+    {
+      "id": 5,
+      "nome": "Demônios"
+    },
+    {
+      "id": 6,
+      "nome": "Drama"
+    },
+    {
+      "id": 7,
+      "nome": "Ecchi"
+    },
+    {
+      "id": 8,
+      "nome": "Espaço"
+    },
+    {
+      "id": 9,
+      "nome": "Esporte"
+    },
+    {
+      "id": 10,
+      "nome": "Fantasia"
+    },
+    {
+      "id": 11,
+      "nome": "Ficção Científica"
+    },
+    {
+      "id": 12,
+      "nome": "Harém"
+    },
+    {
+      "id": 13,
+      "nome": "Horror"
+    },
+    {
+      "id": 14,
+      "nome": "Jogos"
+    },
+    {
+      "id": 15,
+      "nome": "Josei"
+    },
+    {
+      "id": 16,
+      "nome": "Magia"
+    },
+    {
+      "id": 17,
+      "nome": "Mecha"
+    },
+    {
+      "id": 18,
+      "nome": "Mistério"
+    },
+    {
+      "id": 19,
+      "nome": "Militar"
+    },
+    {
+      "id": 20,
+      "nome": "Musical"
+    },
+    {
+      "id": 21,
+      "nome": "Paródia"
+    },
+    {
+      "id": 22,
+      "nome": "Psicológico"
+    },
+    {
+      "id": 23,
+      "nome": "Romance"
+    },
+    {
+      "id": 24,
+      "nome": "Seinen"
+    },
+    {
+      "id": 25,
+      "nome": "Shoujo-ai"
+    },
+    {
+      "id": 26,
+      "nome": "Shounen"
+    },
+    {
+      "id": 27,
+      "nome": "Slice of Life"
+    },
+    {
+      "id": 28,
+      "nome": "Sobrenatural"
+    },
+    {
+      "id": 29,
+      "nome": "Suspense"
+    },
+    {
+      "id": 30,
+      "nome": "Superpoder"
+    },
+    {
+      "id": 31,
+      "nome": "Vampiros"
+    },
+    {
+      "id": 32,
+      "nome": "Vida"
+    },
+    {
+      "id": 33,
+      "nome": "Escolar"
+    }
+  ]
+}
