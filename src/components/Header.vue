@@ -11,7 +11,7 @@
     <div class="text-center" center>
       <v-menu offset-x>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn class="botao-dropdown-header" v-bind="attrs" v-on="on">
+          <v-btn class="botao-dropdown-header" v-bind="attrs" v-on="on" @click="verificaAut">
             Menu
           </v-btn>
         </template>
@@ -23,17 +23,25 @@
               </v-btn>
             </v-list-item-title>
           </v-list-item>
-          <v-list-item>
+          <v-list-item v-if="!logado">
             <v-list-item-title>
-              <v-btn to="/login" text>
+              <v-btn to="/login" text >
                 <span class="mr-2">Login</span>
               </v-btn>
             </v-list-item-title>
           </v-list-item>
-          <v-list-item>
+          <v-list-item v-if="!logado">
             <v-list-item-title>
-              <v-btn to="/cadastrar" text>
+              <v-btn to="/cadastrar" text >
                 <span class="mr-2">Cadastrar-se</span>
+              </v-btn>
+            </v-list-item-title>
+          </v-list-item>
+          
+          <v-list-item v-if="logado">
+            <v-list-item-title>
+              <v-btn @click="deslogar()">
+                <span class="mr-2">Sair</span>
               </v-btn>
             </v-list-item-title>
           </v-list-item>
@@ -46,8 +54,24 @@
 <script>
 export default {
   name: "Navbar",
-  data: () => ({}),
+  data: () => ({
+    logado: sessionStorage.getItem('token')? true : false
+  }),
+
+  mounted() {
+  },
+  methods: {
+    deslogar(){
+      sessionStorage.removeItem('token');
+      this.logado = sessionStorage.getItem('token')? true : false
+    },
+    verificaAut(){
+      this.logado = sessionStorage.getItem('token')? true : false
+    }
+  }
 };
+
+
 </script>
 
 

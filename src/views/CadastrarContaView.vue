@@ -11,7 +11,7 @@
                         <v-col cols="12">
                             <label>
                               <legend>Usuário:</legend>
-                              <v-text-field solo v-model="usuario.usuario" :rules="usuarioRules" label="Informe Usuário" prepend-inner-icon="mdi-account" required></v-text-field>
+                              <v-text-field solo v-model="usuario.name" :rules="usuarioRules" label="Informe Usuário" prepend-inner-icon="mdi-account" required></v-text-field>
                             </label> 
 
                             <label>
@@ -21,7 +21,7 @@
 
                             <label>
                               <legend>Senha:</legend>
-                              <v-text-field type="password" v-model="usuario.senha" :rules="senhaRules" solo label="Informe a senha" prepend-inner-icon="mdi-lock" required></v-text-field>
+                              <v-text-field type="password" v-model="usuario.password" :rules="senhaRules" solo label="Informe a senha" prepend-inner-icon="mdi-lock" required></v-text-field>
                             </label>
     
 
@@ -32,7 +32,8 @@
                     </v-row>
                     <v-row>
                         <v-col cols="12">
-                            <v-btn class="botao-01" @click="salvarUsuario">CADASTRAR</v-btn>
+                            <v-btn v-if="!loading" class="botao-01" @click="salvarUsuario">CADASTRAR</v-btn>
+                            <v-btn v-else class="botao-01" @click="salvarUsuario" disabled>AGUARDE...</v-btn>
                         </v-col>
                     </v-row>
                   </div>
@@ -62,70 +63,100 @@ export default {
     ],
     senhaRules: [
       v => !!v || 'Senha é obrigatória',
-      v => (v && v.length >= 8) || 'A Senha Deve conter 8 ou mais characters',
+      v => (v && v.length >= 6) || 'A Senha Deve conter 8 ou mais characters',
     ],
       usuario: {
-        usuario: "",
+          name: "",
           email: "",
-          senha: "",
+          password: "",
+          perfil_id: 2
       },
-      listaUsuario: [],
+      token: null,
       indice: -1,
+      loading: false
   }),
+
   mounted() {
-      this.getUsuario();
   },
   methods: {
-      // async getUsuario() {
-      //     const req = await fetch('http://localhost:3000/usuario');
-      //     const data = await req.json();
-      //     this.listaUsuario = data;
-      // },
-      // limpaUsuario() {
-      //     this.usuario = {
-      //         id: 0,
-      //         usuario: "",
-      //         email: "",
-      //         senha: ""
-      //     };
-      //     this.indice = -1;
-      // },
-      // async salvarUsuario() {
+      async autenticarUsuario(){
+        const objAut = {email: "root@hotmail.com", password: "root"}
+        const stringObjAutenticar = JSON.stringify(objAut);
+        
+        const req = await fetch("http://api-helpet.herokuapp.com/api/login", {
+          method: "POST",
+                  body: stringObjAutenticar,
+                  headers: { 
+                      'accept': '*/*',
+                      "Content-type": "application/json"
+                  }
+        });
+        const data = await req.json();
+        if(data.token){
+          this.token = data.token;
+        }
+        else if(data.erro){
+          console.log(data.erro);
+          this.erro = data.erro;
+        }
+       
+      },
+      
+      async salvarUsuario() {
           
-      //     if(this.indice < 0){
-              
-      //         const objData = JSON.stringify(this.usuario);
-      //         const req = await fetch('http://localhost:3000/usuario',
-      //         {
-      //             method: "POST",
-      //             body: objData,
-      //             headers: { 
-      //                 "Content-type": "application/json"
-      //             }
-      //         });
-      //         const data = await req.json();
-      //         console.log(data);
+          if(this.indice < 0){
+            this.autenticarUsuario()
+              if(this.token){
+                this.loading = true;
+                const objData = JSON.stringify(this.usuario);
+                const req = await fetch('http://api-helpet.herokuapp.com/api/usuario',
+                {
+                    method: "POST",
+                    body: objData,
+                    headers: { 
+                        "Content-type": "application/json",
+                        'accept': '*/*',
+                        "Authorization": `Bearer ${this.token}`
+                    }
+                });
+                const data = await req.json();
+                if(data.erro){
+                  console.log(data.erro)
+                }
+                console.log(data.erro)
 
-      //     }else{
+              }
 
-      //         const objData = JSON.stringify(this.usuario);
-      //         this.alterarUsuario(this.usuario);
-      //         const req = await fetch('http://localhost:3000/usuario/'+ this.indice,
-      //         {   
-      //             method: "PUT",
-      //             body: objData,
-      //             headers: {
-      //                 "Content-type": "application/json"
-      //             }
-      //         });
-      //         const data = await req.json();
-      //         this.listaUsuario = data;
-      //     }
+          }else{
 
-      //     this.getUsuario();
-      //     this.limpaUsuario();
-      // },
+              const objData = JSON.stringify(this.usuario);
+              this.alterarUsuario(this.usuario);
+              const req = await fetch('http://api-helpet.herokuapp.com/api/usuario'+ this.indice,
+              {   
+                  method: "PUT",
+                  body: objData,
+                  headers: {
+                      "Content-type": "application/json"
+                  }
+              });
+              const data = await req.json();
+              this.listaUsuario = data;
+          }
+          this.loading = false;
 
+          this.limpaUsuario();
+      },
+      limpaUsuario(){
+        this.usuario = {
+          name: "",
+          email: "",
+          password: "",
+          perfil_id: 2
+        },
+      this.token = null,
+      this.indice = -1,
+      this.loading = false
+      }
       // async alterarUsuario(user){
       //     this.indice = user.id;
       //     this.usuario = user;
