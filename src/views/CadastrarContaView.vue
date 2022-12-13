@@ -120,10 +120,16 @@ export default {
                     }
                 });
                 const data = await req.json();
-                if(data.erro){
-                  console.log(data.erro)
+                if(data){
+                  if(data.erro){
+                    console.log(data.erro)
+                  }
+                  else{
+                    return this.$router.push({ name: 'login' })
+                  }
                 }
-                console.log(data.erro)
+                
+                
 
               }
 
