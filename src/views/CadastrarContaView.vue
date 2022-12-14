@@ -24,7 +24,7 @@
                               <v-text-field type="password" v-model="usuario.password" :rules="senhaRules" solo label="Informe a senha" prepend-inner-icon="mdi-lock" required></v-text-field>
                             </label>
     
-
+                            <p class="msg-erro">{{erro}}</p>
                             <!-- <v-text-field label="Usuario" v-model="usuario.login" :rules="loginRules" required></v-text-field>
                             <v-text-field v-model="usuario.email" :rules="emailRules" label="E-mail" required></v-text-field>
                             <v-text-field type="password" label="Senha" :rules="senhaRules" v-model="usuario.senha" required></v-text-field> -->
@@ -63,7 +63,7 @@ export default {
     ],
     senhaRules: [
       v => !!v || 'Senha é obrigatória',
-      v => (v && v.length >= 6) || 'A Senha Deve conter 8 ou mais characters',
+      v => (v && v.length >= 6) || 'A Senha Deve conter 6 ou mais characters',
     ],
       usuario: {
           name: "",
@@ -72,18 +72,20 @@ export default {
           perfil_id: 2
       },
       token: null,
-      indice: -1,
-      loading: false
+      loading: false,
+      erro: ''
   }),
 
   mounted() {
+    this.autenticarUsuario()
   },
   methods: {
       async autenticarUsuario(){
+        const _this = this;
         const objAut = {email: "root@hotmail.com", password: "root"}
         const stringObjAutenticar = JSON.stringify(objAut);
         
-        const req = await fetch("http://api-helpet.herokuapp.com/api/login", {
+        const req = await fetch("https://api-helpet.herokuapp.com/api/login", {
           method: "POST",
                   body: stringObjAutenticar,
                   headers: { 
@@ -93,65 +95,48 @@ export default {
         });
         const data = await req.json();
         if(data.token){
-          this.token = data.token;
+          _this.token = data.token
+          return true
         }
         else if(data.erro){
-          console.log(data.erro);
           this.erro = data.erro;
         }
-       
+        return false
       },
       
       async salvarUsuario() {
-          
-          if(this.indice < 0){
-            this.autenticarUsuario()
-              if(this.token){
-                this.loading = true;
-                const objData = JSON.stringify(this.usuario);
-                const req = await fetch('http://api-helpet.herokuapp.com/api/usuario',
-                {
-                    method: "POST",
-                    body: objData,
-                    headers: { 
-                        "Content-type": "application/json",
-                        'accept': '*/*',
-                        "Authorization": `Bearer ${this.token}`
-                    }
-                });
-                const data = await req.json();
-                if(data){
-                  if(data.erro){
-                    console.log(data.erro)
-                  }
-                  else{
-                    return this.$router.push({ name: 'login' })
-                  }
-                }
-                
-                
 
+        this.loading = true;
+        if(await this.autenticarUsuario()){
+          const objData = JSON.stringify(this.usuario);
+          const req = await fetch('https://api-helpet.herokuapp.com/api/usuario',
+          {
+              method: "POST",
+              body: objData,
+              headers: { 
+                  "Content-type": "application/json",
+                  'accept': '*/*',
+                  "Authorization": `Bearer ${this.token}`
               }
-
-          }else{
-
-              const objData = JSON.stringify(this.usuario);
-              this.alterarUsuario(this.usuario);
-              const req = await fetch('http://api-helpet.herokuapp.com/api/usuario'+ this.indice,
-              {   
-                  method: "PUT",
-                  body: objData,
-                  headers: {
-                      "Content-type": "application/json"
-                  }
-              });
-              const data = await req.json();
-              this.listaUsuario = data;
+          });
+  
+          const status = await req.status;
+          if(status === 201){
+            await req.json();
+            return this.$router.push({ name: 'login' })
+            // console.log(data)
           }
-          this.loading = false;
+          else if(status === 500){
+            this.erro = "E-mail já cadastrado"
+          }
 
-          this.limpaUsuario();
+        }
+
+
+        this.loading = false;
+        
       },
+
       limpaUsuario(){
         this.usuario = {
           name: "",
@@ -227,5 +212,8 @@ export default {
       background-color: #404140 !important;
       border-radius: 20px;
       color: white;
+    }
+    .msg-erro{
+      color: red;
     }
   </style>
