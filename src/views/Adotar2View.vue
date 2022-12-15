@@ -20,7 +20,8 @@
                         <!-- bloco do código referente a imagem -->
                         <v-img
                             height="150"
-                            src="https://static.tudointeressante.com.br/uploads/2014/04/animais-fofos-1.jpg"
+                            width="500"
+                            src="https://memetizando.com.br/wp-content/uploads/2018/04/GIF-CACHORRO-BUGADO.gif"
                         >
                             <v-card-actions>
                                 <v-btn-toggle
@@ -45,17 +46,17 @@
                         </v-img>
 
                         <!-- <v-card-title>PLADEH{{ anime.nome }}</v-card-title> -->
-                        <v-card-title>PLACEHOLDER</v-card-title>
+                        <v-card-title>|| NOME DO ANIMAL ||</v-card-title>
                         <v-card-text>
                             <v-row aligner="center" class="mx-0"> </v-row>
 
                             <div class="my-4 text-subtitle-1">
                                 <!-- {{ anime.estudio }} {{ anime.statusDoAnime }}
                         {{ anime.dtlancamento }} | -->
-                                PLACEHOLDER
+                                
                             </div>
                             <div>
-                                PLACEHOLDER
+                                Oi, eu me chamo {adocao.nome}, tenho {adocao.idade} sendo do porte {adocao.porte}, será que você tens o que é preciso para me dar amor e carinho
                                 <!-- {{ caracteresReduzido(anime.sinopse, 70) }} -->
                             </div>
                         </v-card-text>

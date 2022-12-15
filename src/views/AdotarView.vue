@@ -8,25 +8,25 @@
               <div class="input-form">
                 <v-row>
                   <v-col cols="12">
-                    <label>
-                      <legend>E-mail do Usuário:</legend>
+                    <!-- <label>
+                      <legend>E-mail do Usuário:</legend> -->
                       <!-- <v-text-field solo v-model="usuario.email" label="Informar o correio eletrônico cadastrado" -->
-                      <v-text-field solo label="Informar o correio eletrônico cadastrado" prepend-inner-icon="mdi-account"
+                      <!-- <v-text-field solo label="Informar o correio eletrônico cadastrado" prepend-inner-icon="mdi-dog"
                         required></v-text-field>
-                    </label>
+                    </label> -->
                   </v-col>
                   <v-col cols="6">
                     <label>
   
                       <legend>Nome do Animal:</legend>
-                      <v-text-field solo label="Qual o nome do Bichano?" prepend-inner-icon="mdi-account"
+                      <v-text-field solo v-model="adocao.email" label="Qual o nome do Bichano?" prepend-inner-icon="mdi-format-size"
                         required></v-text-field>
                     </label>
                   </v-col>
                   <v-col cols="6">
                     <label>
                       <legend>Espécie</legend>
-                      <v-text-field required solo label="Espécie" prepend-inner-icon="mdi-lock"></v-text-field>
+                      <v-text-field required solo label="Espécie" prepend-inner-icon="mdi-dog"></v-text-field>
                     </label>
                   </v-col>
                   <v-col cols="6">
@@ -39,7 +39,7 @@
                   <v-col cols="6">
                     <label>
                       <legend>Idade</legend>
-                      <v-text-field solo label="Idade" prepend-inner-icon="mdi-lock"></v-text-field>
+                      <v-text-field solo label="Idade" prepend-inner-icon="mdi-numeric"></v-text-field>
                     </label>
                   </v-col>
                 </v-row>
@@ -49,7 +49,7 @@
   
                 <v-row>
                   <v-col cols="12">
-                    <v-btn class="botao-01" @click="autenticarUsuario">Salvar</v-btn>
+                    <v-btn class="botao-01" @click="salvar">Salvar</v-btn>
                   </v-col>
                 </v-row>
               </div>
