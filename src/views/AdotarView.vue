@@ -96,20 +96,16 @@ export default {
             cor: "Branco",
             especie: "",
             porte: "",
-            idade: 0
+            idade: null,
         },
         token: "",
     }),
-    mounted() {
-        // if (sessionStorage.getItem("token")) this.redirecionar();
-    },
+    mounted() {},
     methods: {
         async salvarAdocao() {
             this.loading = true;
             this.token = sessionStorage.getItem("token");
-            // console.log(token);
 
-            // if (await this.autenticarUsuario()) {
             const objData = JSON.stringify(this.adocao);
             const req = await fetch(
                 "https://api-helpet.herokuapp.com/api/adocao",
@@ -130,6 +126,18 @@ export default {
             // const status = await req.json;
 
             this.loading = false;
+            this.limparAdocao();
+        },
+        limparAdocao() {
+            this.adocao = {
+                anunciante_usuario_id: 1,
+                nome: "",
+                cor: "",
+                especie: "",
+                porte: "",
+                idade: null,
+            };
+            this.indice = -1;
         },
     },
 };
