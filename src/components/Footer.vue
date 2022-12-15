@@ -1,6 +1,6 @@
 <template>
   <v-footer class="cor-footer" dark padless>
-      <v-card-text class="">
+      <v-card-text class=""><hr>
         Copyright ©  {{ new Date().getFullYear() }} -
         <strong>ESDEV - Todos os Direitos reservados.</strong>
         <!-- <strong>ESDEV - Todos os Direitos e Esquerdos estão reservados!</strong> -->
