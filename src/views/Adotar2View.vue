@@ -4,6 +4,12 @@
             <h1>ANIMAIS DISPONÍVEIS</h1>
             <v-row class="text-center">
                 <v-col offset-lg="1" lg="10" ms="12">
+                    <ul v-for="(oi, index) in adocao" :key="index">
+                        {{oi}}
+                        <!-- <li v-for="(item, key) in adoca1" :key="key">
+                                {{ key }}: {{ item }}
+                            </li> -->
+                    </ul>
                     <!-- <div v-if="listaAnime.length == 0"> <h1>Não foi encontrado nenhum registro!</h1></div> -->
 
                     <!-- <div class="bloco--anime" v-for="(anime, indice) in listaAnime" :key="indice"> -->
@@ -46,9 +52,8 @@
                         </v-img>
 
                         <!-- <v-card-title>PLADEH{{ anime.nome }}</v-card-title> -->
-                        <v-card-title v-for="adote in adocao" v-bind:key="adocao.id">
-                            || NOME DO ANIMAL ||</v-card-title
-                        >
+                        <v-card-title> || NOME DO ANIMAL ||</v-card-title>
+
                         <v-card-text>
                             <v-row aligner="center" class="mx-0"> </v-row>
 
@@ -97,13 +102,12 @@ export default {
             especie: "",
             porte: "",
             idade: null,
-            indice: -1
+            indice: -1,
         },
         token: "",
     }),
     mounted() {
         this.getAdocao();
-
     },
     methods: {
         async getAdocao() {
