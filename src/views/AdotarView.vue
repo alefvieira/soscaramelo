@@ -4,7 +4,7 @@
             <h1>Cadastro de Animal</h1>
             <v-row class="text-center">
                 <v-col offset-lg="2" lg="8" md="12">
-                    <v-form v-model="valid">
+                    <v-form>
                         <div class="input-form">
                             <v-row>
                                 <v-col cols="12">
@@ -63,7 +63,7 @@
                                 </v-col>
                             </v-row>
                             <v-row>
-                                <p class="msg-erro">{{ erro }}</p>
+                                <!-- <p class="msg-erro">{{ erro }}</p> -->
                             </v-row>
 
                             <v-row>
@@ -91,11 +91,14 @@ export default {
     data: () => ({
         loading: false,
         adocao: {
-          nome: "",
-          especie: "",
-          porte: "",
-          idade: ""
-        }
+            anunciante_usuario_id: 1,
+            nome: "",
+            cor: "Branco",
+            especie: "",
+            porte: "",
+            idade: 0
+        },
+        token: "",
     }),
     mounted() {
         // if (sessionStorage.getItem("token")) this.redirecionar();
@@ -103,8 +106,8 @@ export default {
     methods: {
         async salvarAdocao() {
             this.loading = true;
-            let token = sessionStorage.getItem("token");
-            console.log(token);
+            this.token = sessionStorage.getItem("token");
+            // console.log(token);
 
             // if (await this.autenticarUsuario()) {
             const objData = JSON.stringify(this.adocao);
@@ -119,9 +122,10 @@ export default {
                         Authorization: `Bearer ${this.token}`,
                     },
                 }
-              
             );
-            console.log("toaqui")
+            // const data
+            console.log("toaqui");
+            console.log(req);
 
             // const status = await req.json;
 
