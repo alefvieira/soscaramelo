@@ -26,7 +26,7 @@
                             <v-card-actions>
                                 <v-btn-toggle
                                     center
-                                    align="center"
+                                    aligner="center"
                                     justify="center"
                                 >
                                     <v-btn
@@ -53,10 +53,12 @@
                             <div class="my-4 text-subtitle-1">
                                 <!-- {{ anime.estudio }} {{ anime.statusDoAnime }}
                         {{ anime.dtlancamento }} | -->
-                                
                             </div>
                             <div>
-                                Oi, eu me chamo {adocao.nome}, tenho {adocao.idade} sendo do porte {adocao.porte}, será que você tens o que é preciso para me dar amor e carinho.
+                                Oi, eu me chamo {adocao.nome}, tenho
+                                {adocao.idade} sendo do porte {adocao.porte},
+                                será que você tens o que é preciso para me dar
+                                amor e carinho.
                                 <!-- {{ caracteresReduzido(anime.sinopse, 70) }} -->
                             </div>
                         </v-card-text>
@@ -65,15 +67,10 @@
                             <v-row aligner="center" class="mx-0"> </v-row>
 
                             <div class="my-4 text-subtitle-1">
-                                PLACEHOLDER
+                                Entre em contato com o
                                 <!-- {{ anime.diretor }} -->
                             </div>
                             PLACEHOLDER
-                            <!-- <div>
-                        Disponível: <strong>{{ converteListaString(anime.plataformas) }}</strong> <br />
-                        Com {{ anime.qtdtemporadas }} temporadas e {{ anime.qtdEp }} de
-                        episódios.<br />Categorias: <strong>{{ converteListaString(anime.categorias) }}</strong> <br />Avaliação:
-                      </div> -->
                         </v-card-text>
                     </v-card>
 
@@ -90,114 +87,34 @@
 export default {
     name: "AdotarForm",
     data: () => ({
-        usuario: {},
-        erro: null,
-        valid: true,
-        listaUsuario: [],
-        indice: -1,
+        loading: false,
     }),
     mounted() {
-        if (sessionStorage.getItem("token")) this.redirecionar();
+        // if (sessionStorage.getItem("token")) this.redirecionar();
     },
     methods: {
-        redirecionar() {
-            return this.$router.push({ name: "home" });
-        },
-        async autenticarUsuario() {
-            const objAut = this.usuario;
-            console.log(objAut);
-            const stringObjAutenticar = JSON.stringify(objAut);
+        async salvarAdocao() {
+            this.loading = true;
+            if (await this.autenticarUsuario()) {
+                const objData = JSON.stringify(this.usuario);
+                const req = await fetch(
+                    "https://api-helpet.herokuapp.com/api/usuario",
+                    {
+                        method: "POST",
+                        body: objData,
+                        headers: {
+                            "Content-type": "application/json",
+                            accept: "*/*",
+                            Authorization: `Bearer ${this.token}`,
+                        },
+                    }
+                );
 
-            const req = await fetch(
-                "http://api-helpet.herokuapp.com/api/login",
-                {
-                    method: "POST",
-                    body: stringObjAutenticar,
-                    headers: {
-                        accept: "/",
-                        "Content-type": "application/json",
-                    },
-                }
-            );
-            const data = await req.json();
-            if (data.token) {
-                sessionStorage.setItem("token", data.token);
-                this.erro = null;
-                return this.$router.push({ name: "home" });
-            } else if (data.erro) {
-                console.log(data.erro);
-                this.erro = data.erro;
+                // const status = await req.json;
             }
+
+            this.loading = false;
         },
-
-        // async getUsuario() {
-        //     const req = await fetch('http://localhost:3000/usuario');
-        //     const data = await req.json();
-        //     this.listaUsuario = data;
-        // },
-        // limpaUsuario() {
-        //     this.usuario = {
-        //         id: 0,
-        //         usuario: "",
-        //         email: "",
-        //         senha: ""
-        //     };
-        //     this.indice = -1;
-        // },
-        // async salvarUsuario() {
-
-        //     if(this.indice < 0){
-
-        //         const objData = JSON.stringify(this.usuario);
-        //         const req = await fetch('http://localhost:3000/usuario',
-        //         {
-        //             method: "POST",
-        //             body: objData,
-        //             headers: {
-        //                 "Content-type": "application/json"
-        //             }
-        //         });
-        //         const data = await req.json();
-        //         console.log(data);
-
-        //     }else{
-
-        //         const objData = JSON.stringify(this.usuario);
-        //         this.alterarUsuario(this.usuario);
-        //         const req = await fetch('http://localhost:3000/usuario/'+ this.indice,
-        //         {
-        //             method: "PUT",
-        //             body: objData,
-        //             headers: {
-        //                 "Content-type": "application/json"
-        //             }
-        //         });
-        //         const data = await req.json();
-        //         this.listaUsuario = data;
-        //     }
-
-        //     this.getUsuario();
-        //     this.limpaUsuario();
-        // },
-
-        // async alterarUsuario(user){
-        //     this.indice = user.id;
-        //     this.usuario = user;
-
-        // },
-        // async removerUsuario(indice){
-        // const req = await fetch('http://localhost:3000/usuario/'+indice,
-        // {
-        //     method: "DELETE",
-        //     headers: {
-        //         "Content-type": "application/json"
-        //     }
-        // });
-        // const data = await req.json();
-        // console.log(data);
-        // this.getUsuario();
-
-        // }
     },
 };
 </script>
