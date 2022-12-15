@@ -29,6 +29,22 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/LoginView.vue')
   },
   {
+    path: '/adotar',
+    name: 'adotar',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdotarView.vue')
+  },
+  {
+    path: '/adotar2',
+    name: 'adotar',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Adotar2View.vue')
+  },
+  {
     path: '*',
     name: 'erro',
     component: () => import(/* webpackChunkName: "about" */ '../views/ErroView.vue')
