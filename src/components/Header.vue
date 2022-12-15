@@ -6,9 +6,28 @@
         SOS Caramelo
       </span>
     </div>
+    
     <!-- cria um espaço -->
     <v-spacer></v-spacer>
-    <div class="text-center" center>
+    <v-list-item v-if="logado" class="btn-perfil">
+      
+        <v-btn 
+            to="/perfil"
+            title="Editar Perfil"
+            color="warning"
+            small
+            fab
+            dark
+          >
+            <v-icon>mdi-account-circle</v-icon>
+          </v-btn>
+
+          <h5 class="nomeUser">{{usuario[0].name}}</h5>
+      </v-list-item>
+
+    <div class="text-center" center >
+      
+
       <v-menu offset-x>
         <template v-slot:activator="{ on, attrs }">
           <v-btn class="botao-dropdown-header" v-bind="attrs" v-on="on" @click="verificaAut">
@@ -16,6 +35,8 @@
           </v-btn>
         </template>
         <v-list>
+
+
           <v-list-item>
             <v-list-item-title>
               <v-btn to="/" text>
@@ -62,14 +83,19 @@
 export default {
   name: "Navbar",
   data: () => ({
-    logado: sessionStorage.getItem('token')? true : false
+    logado: sessionStorage.getItem('token')? true : false,
+    usuario: JSON.parse(localStorage.getItem('usuario'))
   }),
 
   mounted() {
+    this.logado = sessionStorage.getItem('token')? true : false,
+    this.usuario = JSON.parse(localStorage.getItem('usuario'))
   },
   methods: {
     deslogar(){
       sessionStorage.removeItem('token');
+      localStorage.removeItem('local');
+      localStorage.removeItem('usuario');
       this.logado = sessionStorage.getItem('token')? true : false
     },
     verificaAut(){
@@ -83,6 +109,19 @@ export default {
 
 
 <style scoped>
+  .nomeUser{
+    color: black;
+    font-size: 18px;
+    padding:  0 15px;
+    text-transform: uppercase;
+    
+  }
+  .v-list-item {
+    flex: none;
+  }
+  /* .btn-perfil{
+    width: 100px !important;
+  } */
   .header-format{
     display: flex;
     flex-direction: column;

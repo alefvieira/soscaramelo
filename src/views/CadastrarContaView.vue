@@ -211,15 +211,14 @@ export default {
   
           const data = await req.json();
           console.log(data)
-          // if(status === 201){
-          //   await req.json();
-          //   return this.$router.push({ name: 'login' })
-          //   // console.log(data)
-          // }
-          // else if(status === 500){
-          //   this.erro = "E-mail já cadastrado"
-          // }
-          this.limpaUsuario()
+          if(data.erro){
+            this.erro = data.erro;
+             
+          }
+          else {
+            this.limpaUsuario();
+            return this.$router.push({ name: 'login' })
+          }
         }
         this.loading = false;
       },

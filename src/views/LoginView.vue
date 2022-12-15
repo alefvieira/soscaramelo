@@ -38,10 +38,14 @@
 
                             <v-row>
                                 <v-col cols="12">
-                                    <v-btn
+                                    <v-btn v-if="!loading"
                                         class="botao-01"
                                         @click="autenticarUsuario"
                                         >ACESSAR</v-btn
+                                    >
+                                    <v-btn v-else
+                                        class="botao-01" disabled
+                                        >AGUARDE...</v-btn
                                     >
 
                                     <div class="bloco-texto-inscreva">
@@ -73,6 +77,8 @@ export default {
         valid: true,
         listaUsuario: [],
         indice: -1,
+        token: "",
+        loading: false
     }),
     mounted() {
         if (sessionStorage.getItem("token")) this.redirecionar();
@@ -83,9 +89,9 @@ export default {
         },
         async autenticarUsuario() {
             const objAut = this.usuario;
-            console.log(objAut);
             const stringObjAutenticar = JSON.stringify(objAut);
 
+            this.loading = true;
             const req = await fetch(
                 "https://api-helpet.herokuapp.com/api/login",
                 {
@@ -100,12 +106,24 @@ export default {
             const data = await req.json();
             if (data.token) {
                 sessionStorage.setItem("token", data.token);
+                
+                const reqUser = await fetch("https://api-helpet.herokuapp.com/api/usuario?email="+this.usuario.email,{
+                    headers: {
+                        accept: "*/*",
+                        "Content-type": "application/json",
+                        "Authorization": `Bearer ${data.token}`
+                    }
+                });
+                const dataUser = await reqUser.json();
+                localStorage.setItem("usuario", JSON.stringify(dataUser))
+
                 this.erro = null;
                 return this.$router.push({ name: "home" });
             } else if (data.erro) {
                 console.log(data.erro);
                 this.erro = data.erro;
             }
+            this.loading = false;
         },
     },
 };

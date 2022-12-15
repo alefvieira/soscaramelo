@@ -14,12 +14,14 @@
 
                         <br>
                         <br>
-                        <ul>
+                        <!-- <ul>
                           <li v-for="objUser in geoLocation" :key="objUser">
                             {{objUser}}
                           </li>
-                        </ul>
+                        </ul> -->
                         {{geoLocation.city}}
+                        <br>
+                        {{localidade}}
     
   </div>
 </template>
@@ -31,6 +33,7 @@ export default {
     loading: false,
     erro: "",
     position: {lat: 0, lon: 0},
+    localidade: "",
     geoLocation: {}
   
   }),
@@ -40,12 +43,12 @@ export default {
   },
   methods: {
     buscaGeoLocalizacao(){
-      // if (navigator.geolocation){
+      if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(this.showPosition);
-      // }
-      // else{
-      //   this.localidade = "O seu navegador não suporta Geolocalização.";
-      // }
+      }
+      else{
+        this.localidade = "O seu navegador não suporta Geolocalização.";
+      }
     },
  
 
@@ -53,10 +56,11 @@ export default {
       this.position.lat = position.coords.latitude;
       this.position.lon = position.coords.longitude;
 
-
       const req = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${this.position.lat}&lon=${this.position.lon}`);
       const data = await req.json();
       this.geoLocation = data.address
+      const jsonLocal = JSON.stringify({city: this.geoLocation.city, country: this.geoLocation.country, state: this.geoLocation.state})
+      localStorage.setItem('local', jsonLocal);
     },
   }
 
