@@ -11,7 +11,7 @@
     </v-app-bar>
 
     <!-- visão principal onde serão renderizadas as rotas -->
-    <v-main style="padding: 0;">
+    <v-main style="padding: 0;background-color: #ffee1f;">
       <router-view/>
     </v-main>
     <Footer>
