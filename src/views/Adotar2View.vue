@@ -21,9 +21,9 @@
                         <v-img
                             height="150"
                             width="500"
-                            src="https://memetizando.com.br/wp-content/uploads/2018/04/GIF-CACHORRO-BUGADO.gif"
+                            src="https://i.pinimg.com/originals/62/1a/23/621a23650f9a99f3acbfb5bc88eadf54.gif"
                         >
-                            <v-card-actions>
+                            <!-- <v-card-actions>
                                 <v-btn-toggle
                                     center
                                     aligner="center"
@@ -42,11 +42,13 @@
                                         <v-icon center>mdi-cancel</v-icon>
                                     </v-btn>
                                 </v-btn-toggle>
-                            </v-card-actions>
+                            </v-card-actions> -->
                         </v-img>
 
                         <!-- <v-card-title>PLADEH{{ anime.nome }}</v-card-title> -->
-                        <v-card-title>|| NOME DO ANIMAL ||</v-card-title>
+                        <v-card-title v-for="adote in adocao" v-bind:key="adocao.id">
+                            || NOME DO ANIMAL ||</v-card-title
+                        >
                         <v-card-text>
                             <v-row aligner="center" class="mx-0"> </v-row>
 
@@ -88,32 +90,60 @@ export default {
     name: "AdotarForm",
     data: () => ({
         loading: false,
+        adocao: {
+            anunciante_usuario_id: 1,
+            nome: "",
+            cor: "Branco",
+            especie: "",
+            porte: "",
+            idade: null,
+            indice: -1
+        },
+        token: "",
     }),
     mounted() {
-        // if (sessionStorage.getItem("token")) this.redirecionar();
+        this.getAdocao();
+
     },
     methods: {
-        async salvarAdocao() {
+        async getAdocao() {
             this.loading = true;
-            if (await this.autenticarUsuario()) {
-                const objData = JSON.stringify(this.usuario);
-                const req = await fetch(
-                    "https://api-helpet.herokuapp.com/api/usuario",
-                    {
-                        method: "POST",
-                        body: objData,
-                        headers: {
-                            "Content-type": "application/json",
-                            accept: "*/*",
-                            Authorization: `Bearer ${this.token}`,
-                        },
-                    }
-                );
+            this.token = sessionStorage.getItem("token");
 
-                // const status = await req.json;
-            }
+            const objData = JSON.stringify(this.adocao);
+            const req = await fetch(
+                "https://api-helpet.herokuapp.com/api/adocao",
+                {
+                    method: "GET",
+                    body: objData,
+                    headers: {
+                        "Content-type": "application/json",
+                        accept: "*/*",
+                        Authorization: `Bearer ${this.token}`,
+                    },
+                }
+            );
+
+            this.adocao = await req.json();
+
+            console.log("toaqui");
+            console.log(req);
+
+            // const status = await req.json;
 
             this.loading = false;
+            this.limparAdocao();
+        },
+        limparAdocao() {
+            this.adocao = {
+                anunciante_usuario_id: 1,
+                nome: "",
+                cor: "",
+                especie: "",
+                porte: "",
+                idade: null,
+            };
+            this.indice = -1;
         },
     },
 };
