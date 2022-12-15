@@ -16,18 +16,80 @@
 
                             <label>
                               <legend>E-mail:</legend>
-                              <v-text-field solo v-model="usuario.email" :rules="emailRules" label="Informe o seu E-mail" prepend-inner-icon="mdi-email" required></v-text-field>
+                              <v-text-field type="email" solo v-model="usuario.email" :rules="emailRules" label="Informe o seu E-mail" prepend-inner-icon="mdi-email" required></v-text-field>
                             </label>
 
                             <label>
                               <legend>Senha:</legend>
                               <v-text-field type="password" v-model="usuario.password" :rules="senhaRules" solo label="Informe a senha" prepend-inner-icon="mdi-lock" required></v-text-field>
                             </label>
+
+                            <label>
+                              <legend>Celular:</legend>
+                              <v-text-field v-model="usuario.telefone" solo 
+                              
+                              label="Informe o celular" 
+                              :rules="[() => !!usuario.telefone || 'Esse campo é obrigatório', 
+                              (usuario.telefone.length >= 9 && usuario.telefone.length <= 14) || 'Preenchar um número válido']"
+                              prepend-inner-icon="mdi-lock" required></v-text-field>
+                            </label>
+                            
+                            <label >
+                              <legend>Data de Nascimento:</legend>
+                              <v-text-field 
+                                type="date" 
+                                solo
+                                v-model="usuario.dt_nascimento"
+                                :rules="[() => !!usuario.dt_nascimento || 'Esse campo é obrigatório']"
+                                required
+                                persistent-hint
+                                prepend-inner-icon="mdi-calendar"
+                                @blur="date = parseDate(dateFormatted)"
+                               ></v-text-field>
+                            </label>
+                            
+                            <label>
+                              <legend>CEP:</legend>
+                              <v-text-field 
+                              v-model="usuario.cep" solo 
+                              label="Informe o CEP" 
+                              prepend-inner-icon="mdi-map-marker" 
+                              :rules="[() => !!usuario.cep || 'Esse campo é obrigatório']"
+                              @keyup="pesquisaCEP()"
+                              maxlength="8"
+                              required></v-text-field>
+                              
+                            </label>
+                            
+                            
+                            <label>
+                              <legend>Endereço:</legend>
+                              <v-text-field 
+                              v-model="usuario.endereco" solo 
+                              label="Informe o endereço" 
+                              :rules="[() => !!usuario.endereco || 'Esse campo é obrigatório']"
+                              prepend-inner-icon="mdi-map-marker" required></v-text-field>
+                            </label>
+                            
+                            
+                            <label>
+                              <legend>Cidade:</legend>
+                              <v-text-field v-model="usuario.cidade" solo 
+                              label="Informe a cidade" 
+                              :rules="[() => !!usuario.cidade || 'Esse campo é obrigatório']"
+                              prepend-inner-icon="mdi-map-marker" required></v-text-field>
+                            </label>
+                            
+                            <label>
+                              <legend>Bairro:</legend>
+                              <v-text-field v-model="usuario.bairro" solo 
+                              :rules="[() => !!usuario.bairro || 'Esse campo é obrigatório']"
+                              label="Informe a bairro" 
+                              prepend-inner-icon="mdi-map-marker" required></v-text-field>
+                            </label>
     
                             <p class="msg-erro">{{erro}}</p>
-                            <!-- <v-text-field label="Usuario" v-model="usuario.login" :rules="loginRules" required></v-text-field>
-                            <v-text-field v-model="usuario.email" :rules="emailRules" label="E-mail" required></v-text-field>
-                            <v-text-field type="password" label="Senha" :rules="senhaRules" v-model="usuario.senha" required></v-text-field> -->
+
                         </v-col>
                     </v-row>
                     <v-row>
@@ -66,20 +128,31 @@ export default {
       v => (v && v.length >= 6) || 'A Senha Deve conter 6 ou mais characters',
     ],
       usuario: {
-          name: "",
-          email: "",
-          password: "",
-          perfil_id: 2
+          name: null,
+          email: null,
+          password: null,
+          perfil_id: 2,
+          telefone: "",
+          endereco: null,
+          dt_nascimento: null,
+          cep: null,
+          cidade: null,
+          bairro: null,
       },
       token: null,
       loading: false,
       erro: ''
+
   }),
 
   mounted() {
     this.autenticarUsuario()
+    if (sessionStorage.getItem("token")) this.redirecionar();
   },
   methods: {
+      redirecionar() {
+        return this.$router.push({ name: "home" });
+      },
       async autenticarUsuario(){
         const _this = this;
         const objAut = {email: "root@hotmail.com", password: "root"}
@@ -106,9 +179,25 @@ export default {
       
       async salvarUsuario() {
 
+        this.erro = ""
+        for(let objUser in this.usuario){
+
+          if(this.usuario['senha'] && this.usuario['senha'].length < 6) {
+            this.erro = 'A Senha Deve conter 6 ou mais characters';
+            break;
+          }
+          if(this.usuario[objUser] === null || this.usuario[objUser] === ""){
+            this.erro = "Algum campo está vazio, preencha todos!";
+            break;
+          }
+        }
+        
         this.loading = true;
-        if(await this.autenticarUsuario()){
+        if(this.erro === "" && await this.autenticarUsuario()){
+          
           const objData = JSON.stringify(this.usuario);
+          console.log(objData);
+          
           const req = await fetch('https://api-helpet.herokuapp.com/api/usuario',
           {
               method: "POST",
@@ -120,52 +209,54 @@ export default {
               }
           });
   
-          const status = await req.status;
-          if(status === 201){
-            await req.json();
-            return this.$router.push({ name: 'login' })
-            // console.log(data)
-          }
-          else if(status === 500){
-            this.erro = "E-mail já cadastrado"
-          }
+          const data = await req.json();
+          console.log(data)
+          // if(status === 201){
+          //   await req.json();
+          //   return this.$router.push({ name: 'login' })
+          //   // console.log(data)
+          // }
+          // else if(status === 500){
+          //   this.erro = "E-mail já cadastrado"
+          // }
+          this.limpaUsuario()
+        }
+        this.loading = false;
+      },
+      async pesquisaCEP(){
+        let _this = this;
+        this.usuario.cep =  this.usuario.cep.replace(/[^0-9.]/g, '').replace(/(\.*?)\.*/g, '$1')
+
+        if(this.usuario.cep && this.usuario.cep.length === 8){
+            const req = await fetch(`https://viacep.com.br/ws/${this.usuario.cep}/json/`);
+            const data = await req.json()
+
+            _this.usuario.endereco = data.logradouro;
+            _this.usuario.cidade = data.localidade;
+            _this.usuario.bairro = data.bairro;
+            
 
         }
-
-
-        this.loading = false;
-        
       },
+
 
       limpaUsuario(){
         this.usuario = {
-          name: "",
-          email: "",
-          password: "",
-          perfil_id: 2
+          name: null,
+          email: null,
+          password: null,
+          perfil_id: 2,
+          telefone: "",
+          endereco: null,
+          dt_nascimento: null,
+          cep: null,
+          cidade: null,
+          bairro: null,
         },
-      this.token = null,
-      this.indice = -1,
-      this.loading = false
+        this.erro = "";
+        this.token = null;
+        this.loading = false;
       }
-      // async alterarUsuario(user){
-      //     this.indice = user.id;
-      //     this.usuario = user;
-
-      // },
-      // async removerUsuario(indice){
-      // const req = await fetch('http://localhost:3000/usuario/'+indice,
-      // {
-      //     method: "DELETE",
-      //     headers: { 
-      //         "Content-type": "application/json"
-      //     }
-      // });
-      // const data = await req.json();
-      // console.log(data);
-      // this.getUsuario();
-
-      // }
   }
 
 };

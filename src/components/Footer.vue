@@ -1,6 +1,6 @@
 <template>
   <v-footer class="cor-footer" dark padless>
-      <v-card-text class=""><hr>
+      <v-card-text class="">
         Copyright ©  {{ new Date().getFullYear() }} -
         <strong>ESDEV - Todos os Direitos reservados.</strong>
         <!-- <strong>ESDEV - Todos os Direitos e Esquerdos estão reservados!</strong> -->
@@ -27,5 +27,10 @@
   }
   .v-card__title {
     justify-content: center;
+  }
+  footer{
+    /* border-top: 1px solid #adadad33; */
+    box-shadow: 1px 2px 4px 4px #00000063 !important;
+
   }
 </style>

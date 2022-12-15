@@ -87,7 +87,7 @@ export default {
             const stringObjAutenticar = JSON.stringify(objAut);
 
             const req = await fetch(
-                "http://api-helpet.herokuapp.com/api/login",
+                "https://api-helpet.herokuapp.com/api/login",
                 {
                     method: "POST",
                     body: stringObjAutenticar,
@@ -107,75 +107,6 @@ export default {
                 this.erro = data.erro;
             }
         },
-
-        // async getUsuario() {
-        //     const req = await fetch('http://localhost:3000/usuario');
-        //     const data = await req.json();
-        //     this.listaUsuario = data;
-        // },
-        // limpaUsuario() {
-        //     this.usuario = {
-        //         id: 0,
-        //         usuario: "",
-        //         email: "",
-        //         senha: ""
-        //     };
-        //     this.indice = -1;
-        // },
-        // async salvarUsuario() {
-
-        //     if(this.indice < 0){
-
-        //         const objData = JSON.stringify(this.usuario);
-        //         const req = await fetch('http://localhost:3000/usuario',
-        //         {
-        //             method: "POST",
-        //             body: objData,
-        //             headers: {
-        //                 "Content-type": "application/json"
-        //             }
-        //         });
-        //         const data = await req.json();
-        //         console.log(data);
-
-        //     }else{
-
-        //         const objData = JSON.stringify(this.usuario);
-        //         this.alterarUsuario(this.usuario);
-        //         const req = await fetch('http://localhost:3000/usuario/'+ this.indice,
-        //         {
-        //             method: "PUT",
-        //             body: objData,
-        //             headers: {
-        //                 "Content-type": "application/json"
-        //             }
-        //         });
-        //         const data = await req.json();
-        //         this.listaUsuario = data;
-        //     }
-
-        //     this.getUsuario();
-        //     this.limpaUsuario();
-        // },
-
-        // async alterarUsuario(user){
-        //     this.indice = user.id;
-        //     this.usuario = user;
-
-        // },
-        // async removerUsuario(indice){
-        // const req = await fetch('http://localhost:3000/usuario/'+indice,
-        // {
-        //     method: "DELETE",
-        //     headers: {
-        //         "Content-type": "application/json"
-        //     }
-        // });
-        // const data = await req.json();
-        // console.log(data);
-        // this.getUsuario();
-
-        // }
     },
 };
 </script>
