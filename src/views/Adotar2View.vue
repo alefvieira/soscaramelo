@@ -56,7 +56,7 @@
                                 
                             </div>
                             <div>
-                                Oi, eu me chamo {adocao.nome}, tenho {adocao.idade} sendo do porte {adocao.porte}, será que você tens o que é preciso para me dar amor e carinho
+                                Oi, eu me chamo {adocao.nome}, tenho {adocao.idade} sendo do porte {adocao.porte}, será que você tens o que é preciso para me dar amor e carinho.
                                 <!-- {{ caracteresReduzido(anime.sinopse, 70) }} -->
                             </div>
                         </v-card-text>
