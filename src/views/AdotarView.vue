@@ -19,7 +19,8 @@
                                     <label>
                                         <legend>Nome do Animal:</legend>
                                         <v-text-field
-                                            solo                                           
+                                            solo
+                                            v-model="adocao.nome"
                                             label="Qual o nome do Bichano?"
                                             prepend-inner-icon="mdi-format-size"
                                             required
@@ -32,6 +33,7 @@
                                         <v-text-field
                                             required
                                             solo
+                                            v-model="adocao.especie"
                                             label="Espécie"
                                             prepend-inner-icon="mdi-dog"
                                         ></v-text-field>
@@ -42,6 +44,7 @@
                                         <legend>Porte do Animal</legend>
                                         <v-text-field
                                             solo
+                                            v-model="adocao.porte"
                                             label="Grande, Médio ou Pequeno"
                                             prepend-inner-icon="mdi-account"
                                         ></v-text-field>
@@ -52,6 +55,7 @@
                                         <legend>Idade</legend>
                                         <v-text-field
                                             solo
+                                            v-model="adocao.idade"
                                             label="Idade"
                                             prepend-inner-icon="mdi-numeric"
                                         ></v-text-field>
@@ -64,7 +68,9 @@
 
                             <v-row>
                                 <v-col cols="12">
-                                    <v-btn class="botao-01" @click="salvarAdocao()"
+                                    <v-btn
+                                        class="botao-01"
+                                        @click="salvarAdocao()"
                                         >Salvar</v-btn
                                     >
                                 </v-col>
@@ -84,6 +90,12 @@ export default {
     name: "AdotarForm",
     data: () => ({
         loading: false,
+        adocao: {
+          nome: "",
+          especie: "",
+          porte: "",
+          idade: ""
+        }
     }),
     mounted() {
         // if (sessionStorage.getItem("token")) this.redirecionar();
@@ -92,12 +104,12 @@ export default {
         async salvarAdocao() {
             this.loading = true;
             let token = sessionStorage.getItem("token");
-            console.log(token)
+            console.log(token);
 
             // if (await this.autenticarUsuario()) {
-            const objData = JSON.stringify(this.usuario);
+            const objData = JSON.stringify(this.adocao);
             const req = await fetch(
-                "https://api-helpet.herokuapp.com/api/usuario",
+                "https://api-helpet.herokuapp.com/api/adocao",
                 {
                     method: "POST",
                     body: objData,
@@ -107,7 +119,9 @@ export default {
                         Authorization: `Bearer ${this.token}`,
                     },
                 }
+              
             );
+            console.log("toaqui")
 
             // const status = await req.json;
 
