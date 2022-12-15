@@ -23,6 +23,13 @@
               </v-btn>
             </v-list-item-title>
           </v-list-item>
+          <v-list-item>
+            <v-list-item-title>
+              <v-btn to="/informacoes" text>
+                <span class="mr-2">Informações</span>
+              </v-btn>
+            </v-list-item-title>
+          </v-list-item>
           <v-list-item v-if="!logado">
             <v-list-item-title>
               <v-btn to="/login" text >
